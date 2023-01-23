@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'Ads.apps.AdsConfig',
     'Contacts.apps.ContactsConfig',
     'News.apps.NewsConfig',
+    'ckeditor',   #https://django-ckeditor.readthedocs.io/en/latest/
 ]
 
 MIDDLEWARE = [
@@ -124,3 +125,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL= "/media/"
+MEDIA_ROOT=BASE_DIR/"static"
