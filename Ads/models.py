@@ -46,7 +46,7 @@ class Game(models.Model):
 
 
 class Comment(models.Model):
-    text = models.CharField("Текст")
+    text = models.CharField("Текст", max_length=225)
     datetime = models.DateTimeField("Дата и время",auto_now_add=True)
     ad = models.ForeignKey(Ad,on_delete=models.CASCADE,verbose_name="Объявление")
     user = models.ForeignKey(Users,on_delete=models.CASCADE, verbose_name="Пользователь")

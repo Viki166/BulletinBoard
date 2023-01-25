@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% extends "account/email/base_message.txt" %}
+{% load account %} 
+{% load i18n %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+        {% autoescape off %}
+            {% user_display user as user_display %}\
+                {% blocktrans with site_name=current_site.name site_domain=current_site.domain %}
+                    <h2>Спасибо за регистрацию!</h2>
+                    <h3>Нажмите пожалуйста на <a href="{{ activate_url }}">эту ссылку</a> для активации вашей учетной записи.</h3>
+                {% endblocktrans %}
+        {% endautoescape %}
+    {% endblock %}
+</body>
+</html>
