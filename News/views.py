@@ -1,3 +1,46 @@
-from django.shortcuts import render
+from News.models import News,Category,NewsComment
+from django.views.generic import ListView,DetailView
+from News.forms import NewsForm, NewsCommentForm
+from django.views.generic.edit import FormMixin
+from Main.models import Users, User
+from django.urls import reverse_lazy
 
-# Create your views here.
+
+class NewsList(ListView):
+    template_name = 'news/news.html'
+    context_object_name = 'all_news'
+    queryset = News.objects.all().order_by('-id')
+    ordering = ['-id']
+    paginate_by = 3
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = NewsForm
+        return context
+
+
+class NewsDetail(FormMixin, DetailView):
+    model = News
+    template_name = 'news/news-detail.html'
+    context_object_name = 'news'
+    form_class = NewsCommentForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = NewsCommentForm
+        context['comments'] = NewsComment.objects.all()
+        return context
+    
+    def post(self, request,*args,**kwargs):
+        form = NewsCommentForm(request.POST)
+        if form.is_valid():
+            news = self.get_object()
+            form.instanse.news = news
+            form.instance.user = Users.objects.get(user=User.ogjects.get(username=request.user.uesrname))
+            form.save()
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def get_success_url(self, **kwargs):
+        reverse_lazy('news_detail',kwargs={'pk':self.get_object().pk})
