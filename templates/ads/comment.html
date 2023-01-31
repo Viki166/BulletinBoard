@@ -11,21 +11,18 @@
     </div>
     
     <div class="collapse" id="collapseExample">
-    <div>  
-        
-        <form class="mb-4" action="" method="GET">
-            {{filter.form|crispy}}
-            <div class="btn-ad d-md-flex justify-content-md-start">
-                <button class=" btn btn-warning btn-sm ml-2">Найти</button>
-            </div>
-        </form> 
-      
-    </div>
+        <div>    
+            <form class="mb-4" method="GET">
+                {{filter.form|crispy}}
+                <div class="btn-ad d-md-flex justify-content-md-start">
+                    <button class=" btn btn-warning btn-sm ml-2">Найти</button>
+                </div>
+            </form> 
+        </div>
     </div> 
     
-
 {% for comment in filter.qs %}
-    {% if comment.ad.user.user == user and comment.active == False %}
+    {% if comment.ad.user.user == user and comment.user.user != user and comment.active == False %}
         <ul class="community-post-list">
             <li>
                 <div class="community-post">
@@ -33,7 +30,6 @@
                         <p>{{ comment.text }}</p>
                         <div class="post-date text-end mt-3 pe-3">{{ comment.datetime }}</div>
                         <p class="text-end pe-3" style="color: #0dcaf0"><small class="text-white">Пользователь: </small>{{ comment.user }}</p>
-                            
                                 <a class="btn btn-outline-warning btn-sm mr-2 update_active" data-url="{% url 'update_comment_active' comment.id 'public' %}"  href="#">Принять</a>
                                 <a class="btn btn-outline-warning btn-sm update_active" data-url="{% url 'update_comment_active' comment.id 'delete' %}"  href="#">Удалить</a>
                             
@@ -72,3 +68,4 @@ $('body').on('click','.update_active', function(event){
 </script>
 
 {% endblock %}
+

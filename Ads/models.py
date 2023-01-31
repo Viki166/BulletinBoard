@@ -52,7 +52,7 @@ class Comment(models.Model):
     user = models.ForeignKey(Users,on_delete=models.CASCADE, verbose_name="Пользователь")
     active = models.BooleanField("Видимость комментария",default=False)
     def __str__(self):
-        return f'{self.user}'
+        return f'{self.text}'
     class Meta:
         verbose_name = "Комментарий"
         verbose_name_plural = "Комментарии"

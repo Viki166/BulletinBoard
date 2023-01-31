@@ -43,29 +43,12 @@
                                                 <p><a href="#">{{comment.user}}</a></p>
                                                 <p>{{comment.text}}</p>
                                                 <div class="tc-date text-end">{{ comment.datetime }}</div>
-                                            
-                                            <form action="{% url 'comment-like' comment.id %}">
-                                                {% csrf_token %}
-                                                <input type="hidden" name="next" value="{{request.path}}">
-                                                <button class="btn btn-outline-warning btn-sm" type="submit" >like
-                                                    {{ comment.likes.all.count }}
-                                                </button>
-                                            </form>
-                                            <form action="{% url 'comment-dislike' comment.id %}">
-                                                {% csrf_token %}
-                                                <input type="hidden" name="next" value="{{request.path}}">
-                                                <button class="btn btn-outline-warning btn-sm" type="submit" >dislike
-                                                    {{ comment.dislikes.all.count }}
-                                                </button>
-                                            </form>
                                             </div>
                                         </div>
                                     </div>
                                     {% endif %}
                                 {% endfor %}
                         </div>
-
-                        
                         
                         </div> 
                     </div>
@@ -76,3 +59,4 @@
 </section>
    
 {% endblock %}
+

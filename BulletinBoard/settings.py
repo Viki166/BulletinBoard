@@ -26,7 +26,7 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = str(os.getenv('DEBUG'))
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -48,13 +48,14 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     
     'crispy_forms',
-    # 'crispy_bootstrap5',  # https://django-crispy-forms.readthedocs.io/en/latest/
+    'crispy_bootstrap5',  # https://django-crispy-forms.readthedocs.io/en/latest/
 
     'django_filters',  # https://django-filter.readthedocs.io/en/stable/
     
     'allauth',         # https://django-allauth.readthedocs.io/en/latest/installation.html
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 
 ]
 SITE_ID = 1
@@ -127,24 +128,27 @@ AUTH_PASSWORD_VALIDATORS = [
 # django-allauth
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend'
+    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 # django-allauth-socialaccount
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        },
-    }
-}
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         # For each OAuth based provider, either add a ``SocialApp``
+#         # (``socialaccount`` app) containing the required client
+#         # credentials, or list them here:
+#         'APP': {
+#             'client_id': '1076883442819-j3rbl04o2vh3k0vbb025oj8npt4iu0c5.apps.googleusercontent.com',
+#             'secret': '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',
+#             'key': ''
+#         }
+#     }
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
+
+
 
 LANGUAGE_CODE = 'ru'
 
@@ -180,7 +184,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'optional'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 
 

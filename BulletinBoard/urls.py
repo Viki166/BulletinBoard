@@ -30,3 +30,6 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# 1076883442819-j3rbl04o2vh3k0vbb025oj8npt4iu0c5.apps.googleusercontent.com
+# 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
