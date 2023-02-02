@@ -25,9 +25,6 @@ class AdsListView(ListView):
         context = super().get_context_data(**kwargs)
         context['games'] = Game.objects.all()
         context['form'] = AdForm
-        """Добавить пользователя в список Users, если его там нет"""
-        if not(Users.objects.filter(user=self.request.user)):
-            Users.objects.create(user=self.request.user)
         """Комментарии к своим объявлениям"""
         for comment in Comment.objects.all():
             if comment.user.user == self.request.user and comment.user.user == comment.ad.user.user:
@@ -74,6 +71,9 @@ class AdCreateView(CreateView):
         return context
 
     def post(self,request,*args,**kwargs):
+        """Добавить пользователя в Users, если его там нет"""
+        if not(Users.objects.filter(user=self.request.user)):
+            Users.objects.create(user=self.request.user)
         form = AdForm(request.POST)
         if form.is_valid():
             form.instance.user = Users.objects.get(user=request.user)

@@ -1,8 +1,7 @@
 from Main.models import Contact
 from Main.forms import ContactForm
 from django.views.generic import CreateView
-from django.urls import reverse_lazy
-
+from Main.tasks import send_email
 
 class ContactView(CreateView):
     model = Contact
@@ -11,6 +10,7 @@ class ContactView(CreateView):
 
     def form_valid(self,form):
         form.save()
+        send_email.delay(form.instance.email)
         return super().form_valid(form)
 
     
