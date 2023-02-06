@@ -1,34 +1,49 @@
 {% extends 'flatpages/default.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
 {% block title %}Новости{% endblock %}
-{% block content %}
 
-{% for news in all_news %}
+{% block content %}
+<style>
+    .card{
+        border: none !important;
+    }
+
+</style>
 <section class="page-section recent-game-page spad">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="recent-game-item">
-                            <div class="rgi-thumb set-bg" data-setbg="img/recent-game/1.jpg">
-                                <div class="cata new">racing</div>
-                            </div>
-                            <div class="rgi-content">
-                                <h5>{{ news.header }}</h5>
-                                <p>news.text</p>
-                                <a href="#" class="comment">3 Comments</a>
-                                <div class="rgi-extra">
-                                    <div class="rgi-star"><img src="img/icons/star.png" alt=""></div>
-                                    <div class="rgi-heart"><img src="img/icons/heart.png" alt=""></div>
-                                </div>
-                            </div>
-                        </div>	
+        <div class="btn-ad d-md-flex justify-content-end pb-4">
+            {% if user.is_authenticated %}
+            <button class="site-btn"><a href="{% url 'news_create' %}" target="_blank">Добавить новость</a></button>
+            {% endif %}
+        </div>
+        <div class="card-group">       
+            {% for news in all_news %}
+                <div class="col-sm-6 col-md-6 col-lg-6"> 
+                    <div class="card mb-3">
+                       <a href="{% url 'news_detail' news.id %}">
+                            <img class="img-fluid " src="/media/{{news.image}}">
+                        </a>  
+                        <div class="card-body">
+                            <h5 class="card-title">{{ news.header }}</h5>
+                            <p class="card-text">{{news.text|truncatewords:30 }}</p>
+                        </div>
                     </div>
                 </div>
+            {% endfor %}
+        </div>	
+ </div>
+</section>
+{% endblock content %}
+<!-- <div class="col-sm-4 col-md-4 col-lg-4"> 
+    <div class="recent-game-item">
+        <div class="rgi-thumb set-bg" data-setbg="/media/{{news.image}}">
+        </div>
+        <div class="rgi-content">
+            <h5>{{ news.header }}</h5>
+            <p>{{news.text|truncatewords:30 }}</p>
+            
+
             </div>
         </div>
-    </div>
-</section>
-                    
-{% endfor %}
-{% endblock content %}
+    </div> -->

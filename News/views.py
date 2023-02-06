@@ -1,5 +1,5 @@
 from News.models import News,Category,NewsComment
-from django.views.generic import ListView,DetailView
+from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 from News.forms import NewsForm, NewsCommentForm
 from django.views.generic.edit import FormMixin
 from Main.models import Users, User
@@ -11,8 +11,7 @@ class NewsList(ListView):
     context_object_name = 'all_news'
     queryset = News.objects.all().order_by('-id')
     ordering = ['-id']
-    paginate_by = 3
-
+    paginate_by = 6
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = NewsForm
@@ -44,3 +43,27 @@ class NewsDetail(FormMixin, DetailView):
 
     def get_success_url(self, **kwargs):
         reverse_lazy('news_detail',kwargs={'pk':self.get_object().pk})
+
+
+class NewsCreate(CreateView):
+    models=News
+    template_name='news/news-create.html'
+    form_class= NewsForm
+    success_url=reverse_lazy('news')
+
+class NewsUpdate(UpdateView):
+    models=News
+    template_name='news/news-create.html'
+    form_class= NewsForm
+    success_url=reverse_lazy('news')
+    
+    def get_object(self,**kwargs):
+        id= self.kwargs.get('pk')
+        return News.objects.get(pk=id)
+
+
+
+class NewsDelete(DeleteView):
+    template_name='news/news-delete.html'
+    queryset = News.objects.all()
+    success_url =reverse_lazy('news')

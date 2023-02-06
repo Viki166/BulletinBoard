@@ -17,6 +17,9 @@ class News(models.Model):
     def __str__(self):
         return f'{self.header}'
 
+    def get_absolute_url(self): 
+        return f'/{self.id}'
+
 
 class Category(models.Model):
     name = models.CharField("Категория",max_length=225)

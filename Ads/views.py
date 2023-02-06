@@ -65,6 +65,7 @@ class AdCreateView(CreateView):
     form_class = AdForm
     template_name = 'ads/ad_create.html'
     success_url = reverse_lazy('ads')
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = AdForm

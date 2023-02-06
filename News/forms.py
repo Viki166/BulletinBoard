@@ -7,8 +7,7 @@ from django import forms
 class NewsForm(ModelForm):
     class Meta:
         model=News
-        fields = ('header','text','image','category')
-
+        fields = ('header','text','user','image','category')
 
 class NewsCommentForm(ModelForm):
     class Meta:

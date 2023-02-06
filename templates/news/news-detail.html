@@ -1,26 +1,23 @@
 {% extends 'flatpages/default.html' %}
-
-
+{% load static %}
+{% block title %}Новость{% endblock %}
+{% block content %}
 <section class="page-section single-blog-page spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="blog-thumb set-bg" data-setbg="img/recent-game/big.jpg">
-                    <div class="cata new">new</div>
-                    <div class="rgi-extra">
-                        <div class="rgi-star"><img src="img/icons/star.png" alt=""></div>
-                        <div class="rgi-heart"><img src="img/icons/heart.png" alt=""></div>
-                    </div>
-                </div>
-                <div class="blog-content">
-                    <h3>{{ news.header }}</h3>
-                    <!-- <a href="" class="meta-comment">3 comment</a> -->
-                    <p>{{ news.text }}</p>
-                    <p>{{ news.dete }} </p>
-                    <p>{{ news.user }}</p>
-                    <p>{{ news.category }}</p>
-                </div>
+    <div class="container"> 
+        {% if user == news.user.user %}  
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+                <button class="site-btn"><a href="{% url 'news_update' news.id %}">Редактировать</a></button>
+                <button class="site-btn"><a href="{% url 'news_delete' news.id %}">Удалить</a></button>
             </div>
+        {% endif %}     
+        <div class="blog-content">
+            <img class="mb-4 " src="/media/{{news.image}}" alt="image">
+            <h3 class="text-center pb-3">{{ news.header }}</h3>
+            <p>{{ news.text|linebreaks}}</p>
+            <div class="post-date mt-3">{{ news.datetime }}</div>
+            <p class="text-end pe-3" style="color: #0dcaf0;"><small class="text-black">Категория: </small>{{ news.category }}</p>
+            <p class="text-end pe-3" style="color: #0dcaf0;"><small class="text-black">Пользователь: </small>{{ news.user }}</p>
         </div>
     </div>
 </section>
+{% endblock %}

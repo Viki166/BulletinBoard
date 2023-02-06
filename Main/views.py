@@ -1,7 +1,16 @@
 from Main.models import Contact
 from Main.forms import ContactForm
-from django.views.generic import CreateView
+from django.views.generic import ListView,CreateView
 from Main.tasks import send_email
+from News.models import News
+
+
+class MainView(ListView):
+    model = News
+    template_name = 'main/index.html'
+    context_object_name = 'news'
+
+
 
 class ContactView(CreateView):
     model = Contact
